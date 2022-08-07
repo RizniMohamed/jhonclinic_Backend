@@ -13,6 +13,13 @@ from api.serializer import UserSerializer, RecordSerializer, AuthSerializer
 import cloudinary.uploader
 
 
+class paymentView(APIView):
+    def get(self, request, userID=-1, format=None):
+        records = Record.objects.values('payment','date')
+        # serializer = RecordSerializer(records, many=True)
+        return Response({"status": status.HTTP_200_OK, "data": records}, status=status.HTTP_200_OK)
+
+
 class loginView(APIView):
     def post(self, request, format=None):
         try:
@@ -57,8 +64,8 @@ class UserView(APIView):
         serializer = UserSerializer(data=user_data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"status": status.HTTP_201_CREATED, "data": serializer.data}, status=status.HTTP_200_OK)
+        return Response({"status": status.HTTP_400_BAD_REQUEST, "data": serializer._errors}, status=status.HTTP_200_OK)
 
     def put(self, request, pk, format=None):
         try:
@@ -94,15 +101,15 @@ class recordView(APIView):
         else:
             records = Record.objects.all().order_by('-date')
         serializer = RecordSerializer(records, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"status": status.HTTP_200_OK, "data": serializer.data}, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
         record_data = request.data
         serializer = RecordSerializer(data=record_data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"status": status.HTTP_201_CREATED, "data": serializer.data}, status=status.HTTP_200_OK)
+        return Response({"status": status.HTTP_400_BAD_REQUEST, "data": serializer._errors}, status=status.HTTP_200_OK)
 
     def put(self, request, pk, format=None):
         try:
@@ -110,15 +117,15 @@ class recordView(APIView):
             serializer = RecordSerializer(record, data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"status": status.HTTP_200_OK, "data": serializer.data}, status=status.HTTP_200_OK)
+            return Response({"status": status.HTTP_400_BAD_REQUEST, "data": serializer._errors}, status=status.HTTP_200_OK)
         except:
-            raise Http404
+            return Response({"status": status.HTTP_404_NOT_FOUND, "data": "Not found"}, status=status.HTTP_200_OK)
 
     def delete(self, request, pk, format=None):
         try:
             record = Record.objects.get(recordID=pk)
             record.delete()
-            return Response("Deleted successfully", status=status.HTTP_204_NO_CONTENT)
+            return Response({"status": status.HTTP_200_OK, "data": "Deleted successfully"}, status=status.HTTP_200_OK)
         except:
-            raise Http404
+            return Response({"status": status.HTTP_404_NOT_FOUND, "data": "Not found"}, status=status.HTTP_200_OK)
