@@ -4,7 +4,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, JSONParser
 from rest_framework import status
-from django.http import Http404
 
 from api.models import User, Record, Auth
 from api.serializer import UserSerializer, RecordSerializer, AuthSerializer
@@ -55,7 +54,6 @@ class UserView(APIView):
         except:
             return Response({"status": status.HTTP_404_NOT_FOUND, "data": "Invalid userID"}, status=status.HTTP_200_OK)
 
-    @staticmethod
     def post(request):
         user_data = request.data
         res = cloudinary.uploader.upload(
