@@ -1,2 +1,2 @@
-web: gunicorn JhonClinic.wsgi
 config:set DISABLE_COLLECTSTATIC=1
+web: gunicorn JhonClinic.wsgi
