@@ -72,6 +72,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'JhonClinic.urls'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 TEMPLATES = [
     {
