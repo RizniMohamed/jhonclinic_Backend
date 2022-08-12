@@ -150,7 +150,6 @@ USE_TZ = True
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static_build"]
 STATIC_URL = "static"
 
 # Default primary key field type
