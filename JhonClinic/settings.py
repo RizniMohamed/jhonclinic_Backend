@@ -12,9 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pickle import TRUE
 from threading import local
-import django_heroku
 from pathlib import Path
-import os
 
 import cloudinary
 cloudinary.config(
@@ -150,4 +148,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/DOC/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-django_heroku.settings(locals())
